@@ -88,11 +88,18 @@
         :error-handler error-handler}))
 
 (defn ^:export try-create-booking []
-  (.log js/console (ef/from "#booking-title" (ef/read-form-input)))
-  (.log js/console (ef/from "#booking-body" (ef/read-form-input)))
+  (.log js/console  (str {:user_id (ef/from "#user_id" (ef/read-form-input))
+                            :start_point_x (ef/from "#start_point_x" (ef/read-form-input))
+                            :start_point_y (ef/from "#start_point_y" (ef/read-form-input))
+                            :date (ef/from "#date" (ef/read-form-input))
+                            :service_class (ef/from "#service_class" (ef/read-form-input))}))
   (POST "/booking/create"
-        {:params {:title (ef/from "#booking-title" (ef/read-form-input))
-                  :body (ef/from "#booking-body" (ef/read-form-input))}
+        {:format  :json
+        :params {:user_id (ef/from "#user_id" (ef/read-form-input))
+                  :start_point_x (ef/from "#start_point_x" (ef/read-form-input))
+                  :start_point_y (ef/from "#start_point_y" (ef/read-form-input))
+                  :date (ef/from "#date" (ef/read-form-input))
+                  :service_class (ef/from "#service_class" (ef/read-form-input))}
         :handler booking-saved
         :error-handler error-handler}))
 

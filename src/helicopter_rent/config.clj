@@ -2,6 +2,6 @@
 
 (def db {
   :subprotocol "mysql"
-  :subname "//localhost:3306/flyrent"
-  :user "ger0nim0"
-  :password ""})
+  :subname "//localhost:3306/uberH"
+  :user "root"
+  :password "gfhjkm"})
