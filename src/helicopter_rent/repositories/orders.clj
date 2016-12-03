@@ -7,8 +7,17 @@
 (defn get-all []
   (jdbc/query db ["SELECT * FROM orders"]))
 
-(defn get-by-id [id]
-  (jdbc/query db ["SELECT * FROM orders WHERE id = ?" id]))
+(defn get_by_id [id]
+  (let [m (first (jdbc/query db ["SELECT * FROM orders WHERE id = ?" id]))]
+    {:id            (:id m)
+     :user_id       (:user_id m)
+     :helicopter_id (:helicopter_id m)
+     :date          (:date m)
+     :status        (:status m)
+     :start_point   {:start_x m
+                     :start_y m}
+     :end_point     {:end_x m
+                     :end_y m}}))
 
 (defn delete [id]
   (jdbc/delete! db :orders ["id = ?" id]))
@@ -33,7 +42,7 @@
     (first
       (jdbc/insert! db :orders {:user_id       user_id
                                 :helicopter_id helicopter_id
-                                :start_x        (:x start_point)
-                                :start_y        (:y start_point)
+                                :start_x       (:x start_point)
+                                :start_y       (:y start_point)
                                 :date          date
                                 :status        (:submitted status)}))))

@@ -1,40 +1,48 @@
 (ns helicopter_rent.handler
-  (:require [compojure.core :refer :all]
-            [compojure.handler :as handler]
-            [compojure.route :as route]
-            [ring.middleware.json :as middleware]
-            [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
+  (:require [compojure.route :as route]
+            [clojure.java.io :as io]
+            [helicopter_rent.views.contents :as contents]
+            [helicopter_rent.views.layout :as layout]
             [ring.adapter.jetty :as jetty]
+            [helicopter_rent.services.booking :as booking]
+            [helicopter_rent.views.contents :as contents]
+            [helicopter_rent.views.layout :as layout])
+          
+  (:use compojure.core
+        compojure.handler
+        ring.middleware.edn))
+      
 
-            [helicopter_rent.controllers.index :as index-controller]
-            [helicopter_rent.views.layout :as layout]))
+(defn response [data & [status]]
+  {:status (or status 200)
+   :headers {"Content-Type" "application/edn"}
+   :body (pr-str data)})
 
-
-
-
-;[helicopter_rent.repositories.helicopters :as helicopters]
-;[helicopter_rent.repositories.orders :as orders]
-;[helicopter_rent.repositories.users :as users]
-;[helicopter_rent.views.index :as view-index]
+(defroutes booking-routes
+  (POST "/create" [user_id start_point_x start_point_y date service_class] 
+      (booking/book_helicopter (user_id {:x start_point_x :y start_point_y} date service_class))))
+  ; (POST "/delete/:id" [id] (article-delete id))
+  ; (POST "/update/:id" [id title body] (article-udpate id title body))
+  ; (GET "/list" [] (article-list))
+  ; (GET "/:id" [id] (article-view id)))
 
 (defroutes app-routes
-           ; (context "/api/bookings" []
-           ;   (POST "/" [user_id coordinate_from_x coordinate_from_y coordinate_to_x coordinate_to_y helicopter_type_id order_date]
-           ;     (book_helicopter (booking_service.) (user_id coordinate_from_x coordinate_from_y coordinate_to_x coordinate_to_y helicopter_type_id order_date)
-           ;   ))
-           ; )
-           index-controller/routes
-           (route/resources "/")
-           (route/not-found (layout/four-oh-four)))
+  (route/resources "/")
+  (GET "/" [] (slurp (io/resource "public/index.html")))
+  (context "/booking" [] booking-routes)
+  (route/not-found (layout/application "Page Not Found" (contents/not-found)))
+)
 
+(defn init []
+  (println "uberh is starting"))
 
-
+(defn destroy []
+  (println "uberh is shutting down"))
 
 (def app
-  (-> (handler/api app-routes)
-      (middleware/wrap-json-body)
-      (middleware/wrap-json-params)
-      (middleware/wrap-json-response)))
+  (-> app-routes
+      site
+      wrap-edn-params))
 
 (defn -main [& args]
-  (jetty/run-jetty app {:port 3000}))
+  (jetty/run-jetty app))

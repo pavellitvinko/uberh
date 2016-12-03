@@ -6,8 +6,14 @@
 (defn get-all []
   (jdbc/query db ["SELECT * FROM helicopters"]))
 
-(defn get-by-id [id]
-  (first (jdbc/query db ["SELECT * FROM helicopters WHERE id = ?" id])))
+(defn get_by_id [id]
+  (let [m (first (jdbc/query db ["SELECT * FROM helicopters WHERE id = ?" id]))]
+    {:id   (:id m)
+     :name (:name m)
+     :description (:description m)
+     :service_class (:service_class m)
+     :location {:location_x m
+                :location_y m}}))
 
 (defn delete [id]
   (jdbc/delete! db :helicopters ["id = ?" id]))

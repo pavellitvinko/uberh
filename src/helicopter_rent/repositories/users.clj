@@ -6,7 +6,7 @@
 (defn get-all []
   (jdbc/query db ["SELECT * FROM users"]))
 
-(defn get-by-id [id]
+(defn get_by_id [id]
   (jdbc/query db ["SELECT * FROM users WHERE id = ?" id]))
 
 (defn delete [id]
