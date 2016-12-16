@@ -28,7 +28,7 @@
 
 (defroutes app-routes
   (route/resources "/")
-  (GET "/" [] (slurp (io/resource "public/index.html")))
+  (GET "/" [] (slurp (io/resource "public/templates/uberh.html")))
   (context "/booking" [] booking-routes)
   (route/not-found (layout/application "Page Not Found" (contents/not-found)))
 )

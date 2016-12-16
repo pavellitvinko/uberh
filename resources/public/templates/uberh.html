@@ -1,74 +1,177 @@
 <!DOCTYPE HTML>
 <html>
-  <head lang="ru">
+<head lang="ru">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/bootstrap.css">
-    <link rel="stylesheet" href="/css/ssyte.css">
-  </head>
-  <body>
-    <div class="container">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<script type="text/javascript" src="../js/main.js" charset="utf-8"></script>
+<div class="container">
 
-      <div class="uberh-header">
+    <div class="uberh-header">
         <h1 class="uberh-title">Uberh</h1>
         <p class="lead uberh-description">Now you can rent a helicopter.</p>
-      </div>
+    </div>
 
-      <div class="row">
-        <div class="col-sm-8 uberh-main"  id="content">
-	  <div id="inner-content">
-	    
-          <div class="uberh-order">
-            <h2 id="uberh-order-title" class="uberh-order-title">Another uberh order</h2>
-	    <div id="uberh-order-body">uberh order body</div><br/>
-	    <a href="#" id="booking-view" class="btn btn-default btn-xs">View</a>
-	    <!--<a href="#" id="booking-edit" class="btn btn-info btn-xs">Edit</a>-->
-	    <!--<a href="#" id="booking-delete" class="btn btn-warning btn-xs">Delete</a>-->
-          </div><!-- /.uberh-order -->
-	  
-	  </div>
+    <div id="auth-scope" class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-login">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a href="#" class="active" id="signin-link" onclick="helicopter_rent.client.toggle_signin()">Sign In</a>
+                            </div>
+                            <div class="col-xs-6">
+                                <a href="#" id="signup-link" onclick="helicopter_rent.client.toggle_signup()">Sign Up</a>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div id="auth-content" class="col-lg-12">
 
-	  <br/>
-	  <a id="new-order" href="#" class="btn btn-primary" onclick="helicopter_rent.client.show_create()">New order</a>
-	  
-          <!-- ul class="pager"-->
-          <!-- li><a href="#">Previous</a></li-->
-          <!-- li><a href="#">Next</a></li-->
-          <!-- /ul-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        </div><!-- /.uberh-main -->
 
-      
-      </div><!-- /.row -->
+    <div id="signin-form">
+        <div class="form-group">
+            <input type="text" id="signin-email" tabindex="1" class="form-control" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <input type="password" id="signin-password" tabindex="2" class="form-control" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <input type="submit" id="signin-submit" tabindex="3" class="form-control btn btn-login" value="Sign In" onclick="helicopter_rent.client.signin()">
+                </div>
+            </div>
+        </div>
+    </div>
 
-      <div class="row">
-	<div id="booking-form">
-	  User Id:<br/>
-	  <input id="user_id" type="text" class="form-control"><br/>
-	  Start point:<br/>
-	  <input id="start_point_x" type="text" class="form-control"><br/>
-	  <input id="start_point_y" type="text" class="form-control"><br/>
-	   Date:<br/>
-	  <input id="date" type="date" class="form-control"><br/>
-	   Type:<br/>
-	  <select id="service_class" class="form-control">
-	    <option>classic</option>
-	    <option>premium</option>
-	  </select><br/>
-	   
-	  <a id="save-btn" href="#" class="btn btn-primary" onclick="helicopter_rent.client.try_create_booking()">Save</a>
-	  <a href="#" class="btn btn-default" onclick="helicopter_rent.client.close_form()">Cancel</a>
-	</div>
+    <div id="signup-form">
+        <div class="form-group">
+            <input type="text"  id="signup-username" tabindex="1" class="form-control" placeholder="Username">
+        </div>
+        <div class="form-group">
+            <input type="email" id="signup-email" tabindex="1" class="form-control" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <input type="password" id="signup-password" tabindex="2" class="form-control" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <input type="password" id="signup-confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+        </div>
+        <div class="form-group text-center">
+            <input type="checkbox" tabindex="3" id="signup-type">
+            <label for="signup-type">Sign up as a pilot</label>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <input type="submit" id="signup-submit" tabindex="4" class="form-control btn btn-register" value="Sign Up" onclick="helicopter_rent.client.signup()">
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<div id="view-booking">
-	  <h2 id="view-title"></h2>
-	  <span id="view-body"></span>
-	  <br/><br/>
-	  <a href="#" class="btn btn-default" onclick="helicopter_rent.client.close_form()">Close</a>
-	</div>
-      </div>
+    <div id="user-scope" class="row">
+        <div class="row">
+            <div class="col-sm-8 uberh-main" id="content">
+                <div id="inner-content">
 
-    </div><!-- /.container -->
-  </body>
+                    <div class="uberh-order">
+                        <h2 id="uberh-order-title" class="uberh-order-title">Another uberh order</h2>
+                        <div id="uberh-order-body">uberh order body</div>
+                        <br/>
+                        <a href="#" id="booking-view" class="btn btn-default btn-xs">View</a>
+                        <!--<a href="#" id="booking-edit" class="btn btn-info btn-xs">Edit</a>-->
+                        <!--<a href="#" id="booking-delete" class="btn btn-warning btn-xs">Delete</a>-->
+                    </div><!-- /.uberh-order -->
+
+                </div>
+
+                <br/>
+                <a id="new-order" href="#" class="btn btn-primary" onclick="helicopter_rent.client.show_create()">New
+                    order</a>
+
+                <!-- ul class="pager"-->
+                <!-- li><a href="#">Previous</a></li-->
+                <!-- li><a href="#">Next</a></li-->
+                <!-- /ul-->
+
+            </div><!-- /.uberh-main -->
+
+
+        </div><!-- /.row -->
+
+        <div class="row">
+            <div id="booking-form" class="col-md-5">
+                User Id:<br/>
+                <input id="user_id" type="text" class="form-control"><br/>
+                Start point:<br/>
+                <input id="start_point_x" type="text" class="form-control"><br/>
+                <input id="start_point_y" type="text" class="form-control"><br/>
+                Date:<br/>
+                <input id="date" type="date" class="form-control"><br/>
+                Type:<br/>
+                <select id="service_class" class="form-control">
+                    <option>classic</option>
+                    <option>premium</option>
+                </select><br/>
+
+                <a id="save-btn" href="#" class="btn btn-primary"
+                   onclick="helicopter_rent.client.try_create_booking()">Save</a>
+                <a href="#" class="btn btn-default" onclick="helicopter_rent.client.close_form()">Cancel</a>
+            </div>
+
+            <div id="view-booking">
+                <h2 id="view-title"></h2>
+                <span id="view-body"></span>
+                <br/><br/>
+                <a href="#" class="btn btn-default" onclick="helicopter_rent.client.close_form()">Close</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="pilot-scope" class="row">
+        <div class="col-sm-8 uberh-main">
+            <div id="pilot-content">
+
+            </div>
+        </div>
+
+        <div id="register-helicopter" class="col-md-5">
+            Helicopter name:<br/>
+            <input id="helicopter-name" type="text" class="form-control"><br/>
+            Helicopter description:<br/>
+            <input id="helicopter-description" type="text" class="form-control"><br/>
+            Helicopter service class:
+            <select id="helicopter-service-class" class="form-control">
+                <option>classic</option>
+                <option>premium</option>
+            </select><br/>
+
+            <a id="add-helicopter-confirm" href="#" class="btn btn-primary"
+               onclick="helicopter_rent.client.create_helicopter()">Register</a>
+        </div>
+
+        <div id="order-list">
+
+        </div>
+    </div>
+
+</div><!-- /.container -->
+</body>
 </html> 

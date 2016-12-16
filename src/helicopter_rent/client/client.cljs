@@ -4,8 +4,77 @@
   (:require-macros [enfocus.macros :as em]))
 
 (em/defsnippet uberh-header "/templates/uberh.html" ".uberh-header" [])
-(em/defsnippet uberh-content "/templates/uberh.html" "#content" [])
+(em/defsnippet uberh-user-scope "/templates/uberh.html" "#user-scope" [])
+(em/defsnippet uberh-auth-scope "/templates/uberh.html" "#auth-scope" [])
+(em/defsnippet uberh-pilot-scope "/templates/uberh.html" "#pilot-scope" [])
 (em/defsnippet uberh-create-order "/templates/uberh.html" "#booking-form" [])
+(em/defsnippet uberh-signin-form "/templates/uberh.html" "#signin-form" [])
+(em/defsnippet uberh-signup-form "/templates/uberh.html" "#signup-form" [])
+
+
+
+;;;AUTH SCOPE
+(defn set_active_signin_tab []
+      (ef/at "#signin-link" (ef/add-class "active"))
+      (ef/at "#signup-link" (ef/remove-class "active")))
+
+(defn set_active_signup_tab []
+      (ef/at "#signup-link" (ef/add-class "active"))
+      (ef/at "#signin-link" (ef/remove-class "active")))
+
+(defn ^:export toggle_signin []
+  (ef/at "#auth-content" (ef/content (uberh-signin-form)))
+  (set_active_signin_tab))
+
+(defn ^:export toggle_signup []
+  (ef/at "#auth-content" (ef/content (uberh-signup-form)))
+  (set_active_signup_tab))
+
+(defn ^:export signin []
+  (.log js/console  (str {:email (ef/from "#signin-email" (ef/read-form-input))
+                          :password (ef/from "#signin-password" (ef/read-form-input))}))
+  (POST "/booking/signin"
+        {:format  :json
+         :params {:email (ef/from "#signin-email" (ef/read-form-input))
+                  :password (ef/from "#signin-password" (ef/read-form-input))}
+         :handler signin-success
+         :error-handler signin-error}))
+
+(defn ^:export signup []
+  (.log js/console  (str {:username (ef/from "#signup-username" (ef/read-form-input))
+                          :email (ef/from "#signup-email" (ef/read-form-input))
+                          :password (ef/from "#signup-password" (ef/read-form-input))
+                          :confirm (ef/from "#signup-confirm-password" (ef/read-form-input))
+                          :type (ef/from "#signup-type" (ef/read-form-input))}))
+  (POST "/booking/signup"
+        {:format  :json
+         :params {:username (ef/from "#signup-username" (ef/read-form-input))
+                  :email (ef/from "#signup-email" (ef/read-form-input))
+                  :password (ef/from "#signup-password" (ef/read-form-input))
+                  :confirm (ef/from "#signup-confirm-password" (ef/read-form-input))
+                  :type (ef/from "#signup-type" (ef/read-form-input))}
+         :handler signup-success
+         :error-handler signup-error}))
+
+;;;END AUTH SCOPE
+
+
+
+
+;;;PILOT SCOPE
+(defn ^:export create_helicopter []
+  (.log js/console  (str {:name (ef/from "#helicopter-name" (ef/read-form-input))
+                          :description (ef/from "#helicopter-description" (ef/read-form-input))
+                          :service_class (ef/from "#helicopter-service-class" (ef/read-form-input))}))
+  (POST "/booking/create_helicopter"
+        {:format  :json
+         :params {:name (ef/from "#helicopter-name" (ef/read-form-input))
+                  :description (ef/from "#helicopter-description" (ef/read-form-input))
+                  :service_class (ef/from "#helicopter-service-class" (ef/read-form-input))}
+         :handler create_helicopter_success
+         :error-handler create_helicopter_error}))
+
+;;;END PILOT SCOPE
 
 (em/defsnippet uberh-edit-order "/templates/uberh.html" "#booking-form"
   [{:keys [id title body]}]
@@ -35,18 +104,13 @@
   (GET "/booking/list"
       {:handler booking-list}))
 
-(defn start []
-  (ef/at ".container"
-        (ef/do-> (ef/content (uberh-header))
-                  (ef/append (uberh-content))))
-  (try-load-bookings))
-
 (defn hide-new-order-btn []
   (ef/at "#new-order" (ef/set-attr :style "display:none;")))
 
 (defn ^:export show-create []
   (ef/at "#inner-content" (ef/content (uberh-create-order)))
   (hide-new-order-btn))
+
 
 (defn ^:export close-form []
   (start))
@@ -102,6 +166,12 @@
                   :service_class (ef/from "#service_class" (ef/read-form-input))}
         :handler booking-saved
         :error-handler error-handler}))
+
+(defn start []
+  (ef/at ".container"
+         (ef/do-> (ef/content (uberh-header))
+                  (ef/append (uberh-auth-scope))))
+  (toggle_signin))
 
 ; (set! (.-onload js/window) start)
 (set! (.-onload js/window) #(em/wait-for-load (start)))
