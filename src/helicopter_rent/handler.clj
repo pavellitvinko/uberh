@@ -46,4 +46,4 @@
       (middleware/wrap-json-response)))
 
 (defn -main [& args]
-  (jetty/run-jetty app))
+  (jetty/run-jetty app 8080))
