@@ -10,8 +10,8 @@
 (em/defsnippet uberh-create-order "/templates/uberh.html" "#booking-form" [])
 (em/defsnippet uberh-signin-form "/templates/uberh.html" "#signin-form" [])
 (em/defsnippet uberh-signup-form "/templates/uberh.html" "#signup-form" [])
-
-
+(em/defsnippet uberh-pilot-create-helicopter "/templates/uberh.html" "#register-helicopter" [])
+(em/defsnippet uberh-pilot-order-list "/templates/uberh.html" "#pilot-order-list" [])
 
 ;;;AUTH SCOPE
 (defn set_active_signin_tab []
@@ -30,6 +30,15 @@
   (ef/at "#auth-content" (ef/content (uberh-signup-form)))
   (set_active_signup_tab))
 
+(defn signin-success [user-type has-helicopter]
+  (ef/at ".container" (ef/content (uberh-user-scope)))
+  (ef/at ".container" (ef/content (uberh-pilot-scope)))
+  (ef/at "#pilot-scope" (ef/content (uberh-pilot-create-helicopter)))
+  (ef/at "#pilot-scope" (ef/content (uberh-pilot-order-list))))
+
+(defn signin-error [error-message]
+  (js/alert error-message))
+
 (defn ^:export signin []
   (.log js/console  (str {:email (ef/from "#signin-email" (ef/read-form-input))
                           :password (ef/from "#signin-password" (ef/read-form-input))}))
@@ -39,6 +48,12 @@
                   :password (ef/from "#signin-password" (ef/read-form-input))}
          :handler signin-success
          :error-handler signin-error}))
+
+(defn signup-success []
+  (toggle_signin))
+
+(defn signup-error [error-message]
+  (js/alert error-message))
 
 (defn ^:export signup []
   (.log js/console  (str {:username (ef/from "#signup-username" (ef/read-form-input))
@@ -62,6 +77,13 @@
 
 
 ;;;PILOT SCOPE
+(defn create_helicopter_success []
+      (ef/at "#pilot-scope" (ef/content (uberh-pilot-order-list))))
+
+(defn create_helicopter_error []
+    (js/alert "The helicopter didn't register. Please try again"))
+
+
 (defn ^:export create_helicopter []
   (.log js/console  (str {:name (ef/from "#helicopter-name" (ef/read-form-input))
                           :description (ef/from "#helicopter-description" (ef/read-form-input))
@@ -166,6 +188,12 @@
                   :service_class (ef/from "#service_class" (ef/read-form-input))}
         :handler booking-saved
         :error-handler error-handler}))
+
+
+(defmacro map-collection-to-ui [container collection method]
+  (ef/at container
+         (doseq [collection-item 'collection]
+            (ef/append (method collection-item)))))
 
 (defn start []
   (ef/at ".container"

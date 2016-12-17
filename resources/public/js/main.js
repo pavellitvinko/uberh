@@ -56394,6 +56394,38 @@ helicopter_rent.client.uberh_signup_form = function helicopter_rent$client$uberh
   enfocus.core.reset_ids.call(null, id_sym10141, pnod10142__$1);
   return enfocus.core.remove_node_return_child.call(null, pnod10142__$1);
 };
+enfocus.core.load_remote_dom.call(null, "/templates/uberh.html", "remote/templates/uberh.html", "en10092_");
+if (cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "remote/templates/uberh.html") == null) {
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "remote/templates/uberh.html", new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, ["", "NOT_LOADED"], null));
+} else {
+}
+helicopter_rent.client.uberh_pilot_create_helicopter = function helicopter_rent$client$uberh_pilot_create_helicopter() {
+  var vec__10154 = function() {
+    return enfocus.core.get_cached_snippet.call(null, "remote/templates/uberh.html", "#register-helicopter");
+  }.call(null);
+  var id_sym10149 = cljs.core.nth.call(null, vec__10154, 0, null);
+  var pnod10150 = cljs.core.nth.call(null, vec__10154, 1, null);
+  var pnod10150__$1 = enfocus.core.create_hidden_dom.call(null, pnod10150);
+  enfocus.core.i_at.call(null, id_sym10149, pnod10150__$1);
+  enfocus.core.reset_ids.call(null, id_sym10149, pnod10150__$1);
+  return enfocus.core.remove_node_return_child.call(null, pnod10150__$1);
+};
+enfocus.core.load_remote_dom.call(null, "/templates/uberh.html", "remote/templates/uberh.html", "en10092_");
+if (cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "remote/templates/uberh.html") == null) {
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "remote/templates/uberh.html", new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, ["", "NOT_LOADED"], null));
+} else {
+}
+helicopter_rent.client.uberh_pilot_order_list = function helicopter_rent$client$uberh_pilot_order_list() {
+  var vec__10162 = function() {
+    return enfocus.core.get_cached_snippet.call(null, "remote/templates/uberh.html", "#pilot-order-list");
+  }.call(null);
+  var id_sym10157 = cljs.core.nth.call(null, vec__10162, 0, null);
+  var pnod10158 = cljs.core.nth.call(null, vec__10162, 1, null);
+  var pnod10158__$1 = enfocus.core.create_hidden_dom.call(null, pnod10158);
+  enfocus.core.i_at.call(null, id_sym10157, pnod10158__$1);
+  enfocus.core.reset_ids.call(null, id_sym10157, pnod10158__$1);
+  return enfocus.core.remove_node_return_child.call(null, pnod10158__$1);
+};
 helicopter_rent.client.set_active_signin_tab = function helicopter_rent$client$set_active_signin_tab() {
   enfocus.core.at.call(null, "#signin-link", enfocus.core.add_class.call(null, "active"));
   return enfocus.core.at.call(null, "#signup-link", enfocus.core.remove_class.call(null, "active"));
@@ -56412,12 +56444,27 @@ helicopter_rent.client.toggle_signup = function helicopter_rent$client$toggle_si
   return helicopter_rent.client.set_active_signup_tab.call(null);
 };
 goog.exportSymbol("helicopter_rent.client.toggle_signup", helicopter_rent.client.toggle_signup);
+helicopter_rent.client.signin_success = function helicopter_rent$client$signin_success(user_type, has_helicopter) {
+  enfocus.core.at.call(null, ".container", enfocus.core.content.call(null, helicopter_rent.client.uberh_user_scope.call(null)));
+  enfocus.core.at.call(null, ".container", enfocus.core.content.call(null, helicopter_rent.client.uberh_pilot_scope.call(null)));
+  enfocus.core.at.call(null, "#pilot-scope", enfocus.core.content.call(null, helicopter_rent.client.uberh_pilot_create_helicopter.call(null)));
+  return enfocus.core.at.call(null, "#pilot-scope", enfocus.core.content.call(null, helicopter_rent.client.uberh_pilot_order_list.call(null)));
+};
+helicopter_rent.client.signin_error = function helicopter_rent$client$signin_error(error_message) {
+  return alert(error_message);
+};
 helicopter_rent.client.signin = function helicopter_rent$client$signin() {
   console.log([cljs.core.str(new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null, "email", "email", 1415816706), enfocus.core.from.call(null, "#signin-email", enfocus.core.read_form_input.call(null)), new cljs.core.Keyword(null, "password", "password", 417022471), enfocus.core.from.call(null, "#signin-password", enfocus.core.read_form_input.call(null))], null))].join(""));
   return ajax.core.POST.call(null, "/booking/signin", new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "format", "format", -1306924766), new cljs.core.Keyword(null, "json", "json", 1279968570), new cljs.core.Keyword(null, "params", "params", 710516235), new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null, "email", "email", 1415816706), enfocus.core.from.call(null, "#signin-email", enfocus.core.read_form_input.call(null)), new cljs.core.Keyword(null, "password", 
   "password", 417022471), enfocus.core.from.call(null, "#signin-password", enfocus.core.read_form_input.call(null))], null), new cljs.core.Keyword(null, "handler", "handler", -195596612), helicopter_rent.client.signin_success, new cljs.core.Keyword(null, "error-handler", "error-handler", -484945776), helicopter_rent.client.signin_error], null));
 };
 goog.exportSymbol("helicopter_rent.client.signin", helicopter_rent.client.signin);
+helicopter_rent.client.signup_success = function helicopter_rent$client$signup_success() {
+  return helicopter_rent.client.toggle_signin.call(null);
+};
+helicopter_rent.client.signup_error = function helicopter_rent$client$signup_error(error_message) {
+  return alert(error_message);
+};
 helicopter_rent.client.signup = function helicopter_rent$client$signup() {
   console.log([cljs.core.str(new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null, "username", "username", 1605666410), enfocus.core.from.call(null, "#signup-username", enfocus.core.read_form_input.call(null)), new cljs.core.Keyword(null, "email", "email", 1415816706), enfocus.core.from.call(null, "#signup-email", enfocus.core.read_form_input.call(null)), new cljs.core.Keyword(null, "password", "password", 417022471), enfocus.core.from.call(null, "#signup-password", enfocus.core.read_form_input.call(null)), 
   new cljs.core.Keyword(null, "confirm", "confirm", -2004000608), enfocus.core.from.call(null, "#signup-confirm-password", enfocus.core.read_form_input.call(null)), new cljs.core.Keyword(null, "type", "type", 1174270348), enfocus.core.from.call(null, "#signup-type", enfocus.core.read_form_input.call(null))], null))].join(""));
@@ -56426,74 +56473,88 @@ helicopter_rent.client.signup = function helicopter_rent$client$signup() {
   "#signup-type", enfocus.core.read_form_input.call(null))], null), new cljs.core.Keyword(null, "handler", "handler", -195596612), helicopter_rent.client.signup_success, new cljs.core.Keyword(null, "error-handler", "error-handler", -484945776), helicopter_rent.client.signup_error], null));
 };
 goog.exportSymbol("helicopter_rent.client.signup", helicopter_rent.client.signup);
+helicopter_rent.client.create_helicopter_success = function helicopter_rent$client$create_helicopter_success() {
+  return enfocus.core.at.call(null, "#pilot-scope", enfocus.core.content.call(null, helicopter_rent.client.uberh_pilot_order_list.call(null)));
+};
+helicopter_rent.client.create_helicopter_error = function helicopter_rent$client$create_helicopter_error() {
+  return alert("The helicopter didn't register. Please try again");
+};
+helicopter_rent.client.create_helicopter = function helicopter_rent$client$create_helicopter() {
+  console.log([cljs.core.str(new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null, "name", "name", 1843675177), enfocus.core.from.call(null, "#helicopter-name", enfocus.core.read_form_input.call(null)), new cljs.core.Keyword(null, "description", "description", -1428560544), enfocus.core.from.call(null, "#helicopter-description", enfocus.core.read_form_input.call(null)), new cljs.core.Keyword(null, "service_class", "service_class", 1807658904), enfocus.core.from.call(null, "#helicopter-service-class", 
+  enfocus.core.read_form_input.call(null))], null))].join(""));
+  return ajax.core.POST.call(null, "/booking/create_helicopter", new cljs.core.PersistentArrayMap(null, 4, [new cljs.core.Keyword(null, "format", "format", -1306924766), new cljs.core.Keyword(null, "json", "json", 1279968570), new cljs.core.Keyword(null, "params", "params", 710516235), new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null, "name", "name", 1843675177), enfocus.core.from.call(null, "#helicopter-name", enfocus.core.read_form_input.call(null)), new cljs.core.Keyword(null, 
+  "description", "description", -1428560544), enfocus.core.from.call(null, "#helicopter-description", enfocus.core.read_form_input.call(null)), new cljs.core.Keyword(null, "service_class", "service_class", 1807658904), enfocus.core.from.call(null, "#helicopter-service-class", enfocus.core.read_form_input.call(null))], null), new cljs.core.Keyword(null, "handler", "handler", -195596612), helicopter_rent.client.create_helicopter_success, new cljs.core.Keyword(null, "error-handler", "error-handler", 
+  -484945776), helicopter_rent.client.create_helicopter_error], null));
+};
+goog.exportSymbol("helicopter_rent.client.create_helicopter", helicopter_rent.client.create_helicopter);
 enfocus.core.load_remote_dom.call(null, "/templates/uberh.html", "remote/templates/uberh.html", "en10092_");
 if (cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "remote/templates/uberh.html") == null) {
   cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "remote/templates/uberh.html", new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, ["", "NOT_LOADED"], null));
 } else {
 }
-helicopter_rent.client.uberh_edit_order = function helicopter_rent$client$uberh_edit_order(p__10151) {
-  var map__10157 = p__10151;
-  var map__10157__$1 = (!(map__10157 == null) ? map__10157.cljs$lang$protocol_mask$partition0$ & 64 || cljs.core.PROTOCOL_SENTINEL === map__10157.cljs$core$ISeq$ ? true : false : false) ? cljs.core.apply.call(null, cljs.core.hash_map, map__10157) : map__10157;
-  var id = cljs.core.get.call(null, map__10157__$1, new cljs.core.Keyword(null, "id", "id", -1388402092));
-  var title = cljs.core.get.call(null, map__10157__$1, new cljs.core.Keyword(null, "title", "title", 636505583));
-  var body = cljs.core.get.call(null, map__10157__$1, new cljs.core.Keyword(null, "body", "body", -2049205669));
-  var vec__10159 = function(map__10157, map__10157__$1, id, title, body) {
+helicopter_rent.client.uberh_edit_order = function helicopter_rent$client$uberh_edit_order(p__10167) {
+  var map__10173 = p__10167;
+  var map__10173__$1 = (!(map__10173 == null) ? map__10173.cljs$lang$protocol_mask$partition0$ & 64 || cljs.core.PROTOCOL_SENTINEL === map__10173.cljs$core$ISeq$ ? true : false : false) ? cljs.core.apply.call(null, cljs.core.hash_map, map__10173) : map__10173;
+  var id = cljs.core.get.call(null, map__10173__$1, new cljs.core.Keyword(null, "id", "id", -1388402092));
+  var title = cljs.core.get.call(null, map__10173__$1, new cljs.core.Keyword(null, "title", "title", 636505583));
+  var body = cljs.core.get.call(null, map__10173__$1, new cljs.core.Keyword(null, "body", "body", -2049205669));
+  var vec__10175 = function(map__10173, map__10173__$1, id, title, body) {
     return function() {
       return enfocus.core.get_cached_snippet.call(null, "remote/templates/uberh.html", "#booking-form");
     };
-  }(map__10157, map__10157__$1, id, title, body).call(null);
-  var id_sym10149 = cljs.core.nth.call(null, vec__10159, 0, null);
-  var pnod10150 = cljs.core.nth.call(null, vec__10159, 1, null);
-  var pnod10150__$1 = enfocus.core.create_hidden_dom.call(null, pnod10150);
-  enfocus.core.i_at.call(null, id_sym10149, pnod10150__$1, "#booking-title", enfocus.core.set_attr.call(null, new cljs.core.Keyword(null, "value", "value", 305978217), title), "#booking-body", enfocus.core.content.call(null, body), "#save-btn", enfocus.core.set_attr.call(null, new cljs.core.Keyword(null, "onclick", "onclick", 1297553739), [cljs.core.str("client.core.try_update_booking("), cljs.core.str(id), cljs.core.str(")")].join("")));
-  enfocus.core.reset_ids.call(null, id_sym10149, pnod10150__$1);
-  return enfocus.core.remove_node_return_child.call(null, pnod10150__$1);
+  }(map__10173, map__10173__$1, id, title, body).call(null);
+  var id_sym10165 = cljs.core.nth.call(null, vec__10175, 0, null);
+  var pnod10166 = cljs.core.nth.call(null, vec__10175, 1, null);
+  var pnod10166__$1 = enfocus.core.create_hidden_dom.call(null, pnod10166);
+  enfocus.core.i_at.call(null, id_sym10165, pnod10166__$1, "#booking-title", enfocus.core.set_attr.call(null, new cljs.core.Keyword(null, "value", "value", 305978217), title), "#booking-body", enfocus.core.content.call(null, body), "#save-btn", enfocus.core.set_attr.call(null, new cljs.core.Keyword(null, "onclick", "onclick", 1297553739), [cljs.core.str("client.core.try_update_booking("), cljs.core.str(id), cljs.core.str(")")].join("")));
+  enfocus.core.reset_ids.call(null, id_sym10165, pnod10166__$1);
+  return enfocus.core.remove_node_return_child.call(null, pnod10166__$1);
 };
 enfocus.core.load_remote_dom.call(null, "/templates/uberh.html", "remote/templates/uberh.html", "en10092_");
 if (cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "remote/templates/uberh.html") == null) {
   cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "remote/templates/uberh.html", new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, ["", "NOT_LOADED"], null));
 } else {
 }
-helicopter_rent.client.uberh_order_view = function helicopter_rent$client$uberh_order_view(p__10164) {
-  var map__10170 = p__10164;
-  var map__10170__$1 = (!(map__10170 == null) ? map__10170.cljs$lang$protocol_mask$partition0$ & 64 || cljs.core.PROTOCOL_SENTINEL === map__10170.cljs$core$ISeq$ ? true : false : false) ? cljs.core.apply.call(null, cljs.core.hash_map, map__10170) : map__10170;
-  var title = cljs.core.get.call(null, map__10170__$1, new cljs.core.Keyword(null, "title", "title", 636505583));
-  var body = cljs.core.get.call(null, map__10170__$1, new cljs.core.Keyword(null, "body", "body", -2049205669));
-  var vec__10172 = function(map__10170, map__10170__$1, title, body) {
+helicopter_rent.client.uberh_order_view = function helicopter_rent$client$uberh_order_view(p__10180) {
+  var map__10186 = p__10180;
+  var map__10186__$1 = (!(map__10186 == null) ? map__10186.cljs$lang$protocol_mask$partition0$ & 64 || cljs.core.PROTOCOL_SENTINEL === map__10186.cljs$core$ISeq$ ? true : false : false) ? cljs.core.apply.call(null, cljs.core.hash_map, map__10186) : map__10186;
+  var title = cljs.core.get.call(null, map__10186__$1, new cljs.core.Keyword(null, "title", "title", 636505583));
+  var body = cljs.core.get.call(null, map__10186__$1, new cljs.core.Keyword(null, "body", "body", -2049205669));
+  var vec__10188 = function(map__10186, map__10186__$1, title, body) {
     return function() {
       return enfocus.core.get_cached_snippet.call(null, "remote/templates/uberh.html", "#view-booking");
     };
-  }(map__10170, map__10170__$1, title, body).call(null);
-  var id_sym10162 = cljs.core.nth.call(null, vec__10172, 0, null);
-  var pnod10163 = cljs.core.nth.call(null, vec__10172, 1, null);
-  var pnod10163__$1 = enfocus.core.create_hidden_dom.call(null, pnod10163);
-  enfocus.core.i_at.call(null, id_sym10162, pnod10163__$1, "#view-title", enfocus.core.content.call(null, title), "#view-body", enfocus.core.content.call(null, body));
-  enfocus.core.reset_ids.call(null, id_sym10162, pnod10163__$1);
-  return enfocus.core.remove_node_return_child.call(null, pnod10163__$1);
+  }(map__10186, map__10186__$1, title, body).call(null);
+  var id_sym10178 = cljs.core.nth.call(null, vec__10188, 0, null);
+  var pnod10179 = cljs.core.nth.call(null, vec__10188, 1, null);
+  var pnod10179__$1 = enfocus.core.create_hidden_dom.call(null, pnod10179);
+  enfocus.core.i_at.call(null, id_sym10178, pnod10179__$1, "#view-title", enfocus.core.content.call(null, title), "#view-body", enfocus.core.content.call(null, body));
+  enfocus.core.reset_ids.call(null, id_sym10178, pnod10179__$1);
+  return enfocus.core.remove_node_return_child.call(null, pnod10179__$1);
 };
 enfocus.core.load_remote_dom.call(null, "/templates/uberh.html", "remote/templates/uberh.html", "en10092_");
 if (cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "remote/templates/uberh.html") == null) {
   cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "remote/templates/uberh.html", new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, ["", "NOT_LOADED"], null));
 } else {
 }
-helicopter_rent.client.uberh_order = function helicopter_rent$client$uberh_order(p__10177) {
-  var map__10183 = p__10177;
-  var map__10183__$1 = (!(map__10183 == null) ? map__10183.cljs$lang$protocol_mask$partition0$ & 64 || cljs.core.PROTOCOL_SENTINEL === map__10183.cljs$core$ISeq$ ? true : false : false) ? cljs.core.apply.call(null, cljs.core.hash_map, map__10183) : map__10183;
-  var id = cljs.core.get.call(null, map__10183__$1, new cljs.core.Keyword(null, "id", "id", -1388402092));
-  var title = cljs.core.get.call(null, map__10183__$1, new cljs.core.Keyword(null, "title", "title", 636505583));
-  var body = cljs.core.get.call(null, map__10183__$1, new cljs.core.Keyword(null, "body", "body", -2049205669));
-  var vec__10185 = function(map__10183, map__10183__$1, id, title, body) {
+helicopter_rent.client.uberh_order = function helicopter_rent$client$uberh_order(p__10193) {
+  var map__10199 = p__10193;
+  var map__10199__$1 = (!(map__10199 == null) ? map__10199.cljs$lang$protocol_mask$partition0$ & 64 || cljs.core.PROTOCOL_SENTINEL === map__10199.cljs$core$ISeq$ ? true : false : false) ? cljs.core.apply.call(null, cljs.core.hash_map, map__10199) : map__10199;
+  var id = cljs.core.get.call(null, map__10199__$1, new cljs.core.Keyword(null, "id", "id", -1388402092));
+  var title = cljs.core.get.call(null, map__10199__$1, new cljs.core.Keyword(null, "title", "title", 636505583));
+  var body = cljs.core.get.call(null, map__10199__$1, new cljs.core.Keyword(null, "body", "body", -2049205669));
+  var vec__10201 = function(map__10199, map__10199__$1, id, title, body) {
     return function() {
       return enfocus.core.get_cached_snippet.call(null, "remote/templates/uberh.html", ".uberh-order");
     };
-  }(map__10183, map__10183__$1, id, title, body).call(null);
-  var id_sym10175 = cljs.core.nth.call(null, vec__10185, 0, null);
-  var pnod10176 = cljs.core.nth.call(null, vec__10185, 1, null);
-  var pnod10176__$1 = enfocus.core.create_hidden_dom.call(null, pnod10176);
-  enfocus.core.i_at.call(null, id_sym10175, pnod10176__$1, "#uberh-order-title", enfocus.core.content.call(null, title), "#uberh-order-body", enfocus.core.content.call(null, body), "#booking-view", enfocus.core.set_attr.call(null, new cljs.core.Keyword(null, "onclick", "onclick", 1297553739), [cljs.core.str("client.core.try_view_booking("), cljs.core.str(id), cljs.core.str(")")].join("")), "#booking-edit", enfocus.core.set_attr.call(null, new cljs.core.Keyword(null, "onclick", "onclick", 1297553739), 
+  }(map__10199, map__10199__$1, id, title, body).call(null);
+  var id_sym10191 = cljs.core.nth.call(null, vec__10201, 0, null);
+  var pnod10192 = cljs.core.nth.call(null, vec__10201, 1, null);
+  var pnod10192__$1 = enfocus.core.create_hidden_dom.call(null, pnod10192);
+  enfocus.core.i_at.call(null, id_sym10191, pnod10192__$1, "#uberh-order-title", enfocus.core.content.call(null, title), "#uberh-order-body", enfocus.core.content.call(null, body), "#booking-view", enfocus.core.set_attr.call(null, new cljs.core.Keyword(null, "onclick", "onclick", 1297553739), [cljs.core.str("client.core.try_view_booking("), cljs.core.str(id), cljs.core.str(")")].join("")), "#booking-edit", enfocus.core.set_attr.call(null, new cljs.core.Keyword(null, "onclick", "onclick", 1297553739), 
   [cljs.core.str("client.core.try_edit_booking("), cljs.core.str(id), cljs.core.str(")")].join("")), "#booking-delete", enfocus.core.set_attr.call(null, new cljs.core.Keyword(null, "onclick", "onclick", 1297553739), [cljs.core.str("if(confirm('Really delete?')) client.core.try_delete_booking("), cljs.core.str(id), cljs.core.str(")")].join("")));
-  enfocus.core.reset_ids.call(null, id_sym10175, pnod10176__$1);
-  return enfocus.core.remove_node_return_child.call(null, pnod10176__$1);
+  enfocus.core.reset_ids.call(null, id_sym10191, pnod10192__$1);
+  return enfocus.core.remove_node_return_child.call(null, pnod10192__$1);
 };
 helicopter_rent.client.booking_list = function helicopter_rent$client$booking_list(data) {
   return enfocus.core.at.call(null, "#inner-content", enfocus.core.content.call(null, cljs.core.map.call(null, helicopter_rent.client.uberh_order, data)));
@@ -56513,11 +56574,11 @@ helicopter_rent.client.close_form = function helicopter_rent$client$close_form()
   return helicopter_rent.client.start.call(null);
 };
 goog.exportSymbol("helicopter_rent.client.close_form", helicopter_rent.client.close_form);
-helicopter_rent.client.error_handler = function helicopter_rent$client$error_handler(p__10188) {
-  var map__10191 = p__10188;
-  var map__10191__$1 = (!(map__10191 == null) ? map__10191.cljs$lang$protocol_mask$partition0$ & 64 || cljs.core.PROTOCOL_SENTINEL === map__10191.cljs$core$ISeq$ ? true : false : false) ? cljs.core.apply.call(null, cljs.core.hash_map, map__10191) : map__10191;
-  var status = cljs.core.get.call(null, map__10191__$1, new cljs.core.Keyword(null, "status", "status", -1997798413));
-  var status_text = cljs.core.get.call(null, map__10191__$1, new cljs.core.Keyword(null, "status-text", "status-text", -1834235478));
+helicopter_rent.client.error_handler = function helicopter_rent$client$error_handler(p__10204) {
+  var map__10207 = p__10204;
+  var map__10207__$1 = (!(map__10207 == null) ? map__10207.cljs$lang$protocol_mask$partition0$ & 64 || cljs.core.PROTOCOL_SENTINEL === map__10207.cljs$core$ISeq$ ? true : false : false) ? cljs.core.apply.call(null, cljs.core.hash_map, map__10207) : map__10207;
+  var status = cljs.core.get.call(null, map__10207__$1, new cljs.core.Keyword(null, "status", "status", -1997798413));
+  var status_text = cljs.core.get.call(null, map__10207__$1, new cljs.core.Keyword(null, "status-text", "status-text", -1834235478));
   return console.log([cljs.core.str("Something bad happened: "), cljs.core.str(status), cljs.core.str(" "), cljs.core.str(status_text)].join(""));
 };
 helicopter_rent.client.booking_saved = function helicopter_rent$client$booking_saved(response) {

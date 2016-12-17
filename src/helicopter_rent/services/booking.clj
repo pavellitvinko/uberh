@@ -55,6 +55,8 @@
   (orders/set-status order_id (:completed status))
   (orders/set-price order_id price))
 
+(defn signin [email password])
+
 (defn finish_trip [order_id helicopter_id]
   (if-let [helicopter (helicopters/get_by_id helicopter_id)]
     ; helicopter found
