@@ -8,36 +8,41 @@
             [ring.middleware.json :as middleware]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.adapter.jetty :as jetty]
-            [helicopter_rent.controllers.users :as users]
+    ;[helicopter_rent.controllers.users :as users]
+            [helicopter_rent.session :as session]
 
             [helicopter_rent.services.booking :as booking]
             [helicopter_rent.views.contents :as contents]
             [helicopter_rent.views.layout :as layout]))
-      
+
 
 (defn response [data & [status]]
-  {:status (or status 200)
+  {:status  (or status 200)
    :headers {"Content-Type" "application/json"}
-   :body (pr-str data)})
+   :body    (pr-str data)})
 
 (defroutes booking-routes
-  (POST "/create" [user_id start_point_x start_point_y date service_class] 
-        (response(booking/book_helicopter user_id {:x start_point_x :y start_point_y} date service_class))))
-  (POST "/signin" [email password]
-        (response(users/login email password))
-  (POST "/signup" [username email password confirm type]
-        (response(users/register username email password confirm type)))
-  ; (POST "/delete/:id" [id] (article-delete id))
-  ; (POST "/update/:id" [id title body] (article-udpate id title body))
-  ; (GET "/list" [] (article-list))
-  ; (GET "/:id" [id] (article-view id)))
+           (POST "/create" [user_id start_point_x start_point_y date service_class]
+             (response (booking/book_helicopter user_id {:x start_point_x :y start_point_y} date service_class))))
+;(POST "/signin" [email password]
+;      (response(users/login email password))
+;(POST "/signup" [username email password confirm type]
+;      (response(users/register username email password confirm type)))
+; (POST "/delete/:id" [id] (article-delete id))
+; (POST "/update/:id" [id title body] (article-udpate id title body))
+; (GET "/list" [] (article-list))
+; (GET "/:id" [id] (article-view id)))
 
 (defroutes app-routes
-  (route/resources "/")
-  (GET "/" [] (slurp (io/resource "public/templates/uberh.html")))
-  (context "/booking" [] booking-routes)
-  (route/not-found (layout/application "Page Not Found" (contents/not-found)))
-)
+           (route/resources "/")
+           (GET "/" [] (slurp (io/resource "public/templates/uberh.html")))
+           (POST "/signin" [email password]
+             (response (session/add email password)))
+           (POST "/logout" [hash]
+             (session/remove hash) {:status 200})
+           (context "/booking" [] booking-routes)
+           (route/not-found (layout/application "Page Not Found" (contents/not-found)))
+           )
 
 (defn init []
   (println "uberh is starting"))

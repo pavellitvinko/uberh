@@ -8,6 +8,7 @@
                  [ring/ring-defaults "0.2.1"]
                  [ring/ring-json "0.3.1"]
                  [ring/ring-jetty-adapter "1.3.2"]
+                 [ring/ring-mock "0.3.0"]
                  [fogus/ring-edn "0.3.0"]
                  [enfocus "2.1.1"]
                  [cljs-ajax  "0.5.8"]]

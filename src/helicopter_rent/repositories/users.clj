@@ -17,3 +17,6 @@
                           :email    email
                           :password password
                           :role     role}))
+
+(defn get_by_password [email password]
+          (jdbc/query db ["SELECT * FROM users WHERE email = ? AND password = ?" email password]))
